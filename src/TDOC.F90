@@ -147,7 +147,11 @@ contains
      flocc=self%floc*sal*c**2
 
 ! Photolysis
+    if (EIR.gt.0._rk) then
     photolysis=self%phyref*(EIR/self%iref)*c
+    else
+    photolysis=0._rk
+    end if
 
 ! in order to ensure mass conservation, the fraction of carbon going from T1 to T2 after photolysis is down regulated 
 ! if T1 has less  N and/or P than T2. Any excess of nutrients is redirected into the dissolved pool (N1p and N4n). (Luca, July 2018)    
