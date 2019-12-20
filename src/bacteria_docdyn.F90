@@ -26,7 +26,7 @@ module ersem_bacteria_docdyn
       type (type_diagnostic_variable_id) :: id_fB1O3c, id_fB1NIn, id_fB1N1p
       type (type_diagnostic_variable_id) :: id_fR1B1c, id_fR2B1c, id_fR3B1c,id_fB1R1c, id_fB1R2c, id_fB1R3c
       type (type_diagnostic_variable_id) :: id_fR1B1n,id_fB1R1n,id_fR1B1p,id_fB1R1p,id_fT1B1c,id_fT2B1c
-      type (type_diagnostic_variable_id) :: id_minn,id_minp
+      type (type_diagnostic_variable_id) :: id_minn,id_minp,id_netb1
       ! Parameters
       integer  :: nRP
       integer  :: iswBlimX
@@ -192,6 +192,7 @@ contains
       call self%register_diagnostic_variable(self%id_fB1N1p,'fB1N1p','mmol P/m^3/d','bacterial DIP release')
 
       call self%register_diagnostic_variable(self%id_fB1R1c,'fB1R1c','mg C/m^3/d','bacterial release of labile DOC ')
+      call self%register_diagnostic_variable(self%id_netb1,'netb1','mg C/m^3/d','net bacterial production ')
       call self%register_diagnostic_variable(self%id_fB1R2c,'fB1R2c','mg C/m^3/d','bacterial release of semi-labile DOC ')
       call self%register_diagnostic_variable(self%id_fB1R3c,'fB1R3c','mg C/m^3/d','bacterial release of semi-refractory DOC ')
       call self%register_diagnostic_variable(self%id_fB1R1n,'fB1R1n','mmol N/m^3/d','bacterial DON release')
@@ -351,6 +352,7 @@ contains
          _SET_ODE_(self%id_T2c, - sugB1*T2cP*self%rT2B1X)
 
          _SET_DIAGNOSTIC_(self%id_fB1R1c, fB1R1c)
+         _SET_DIAGNOSTIC_(self%id_netb1, netb1)
          _SET_DIAGNOSTIC_(self%id_fB1R2c, fB1R2c)
          _SET_DIAGNOSTIC_(self%id_fB1R3c, fB1R3c)
          _SET_DIAGNOSTIC_(self%id_fR1B1c, sugB1*R1cP)

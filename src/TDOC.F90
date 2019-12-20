@@ -44,7 +44,7 @@ contains
       integer,                         intent(in)           :: configunit
 
 ! !LOCAL VARIABLES:
-      real(rk) :: c0,EPS
+      real(rk) :: c0,EPS,iopABS,iopBBS
 !
 !EOP
 !-----------------------------------------------------------------------
@@ -58,6 +58,8 @@ contains
       call self%get_parameter(self%qp,    'qp',    'mmol P/mg C','phosphorus to carbon ratio')
       call self%get_parameter(self%qn,    'qn',    'mmol N/mg C','nitrogen to carbon ratio')
       call self%get_parameter(EPS,     'EPS',    'm^2/mg C','specific shortwave attenuation', default=4.E-4_rk)
+      call self%get_parameter(iopABS,  'iopABS', 'm^2/mg C','specific shortwave absorption', default=8.E-3_rk)
+      call self%get_parameter(iopBBS,  'iopBBS', 'm^2/mg C','specific shortwave backscatter', default=3.E-3_rk)
       call self%get_parameter(c0,'c0','mg C/m^3','background carbon concentration')
       call self%get_parameter(self%sbx,   'sbx',   'psu',        'optimal salinity')
       call self%get_parameter(self%scx,   'scx',   '',        'salinity function parameter')
@@ -100,6 +102,10 @@ contains
       ! Register contribution to light extinction
       call self%add_to_aggregate_variable(standard_variables%attenuation_coefficient_of_photosynthetic_radiative_flux, &
          self%id_c,scale_factor=EPS,include_background=.true.)
+      call self%add_to_aggregate_variable(particulate_organic_absorption_coefficient, &
+         self%id_c,scale_factor=iopABS,include_background=.true.)
+      call self%add_to_aggregate_variable(particulate_organic_backscatter_coefficient, &
+         self%id_c,scale_factor=iopBBS,include_background=.true.)
       
 
    end subroutine initialize
