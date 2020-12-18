@@ -1,0 +1,49 @@
+LENA_3_TDOClight:
+   time_unit: day
+   time_step: 1
+   time_method: 2
+   variables:
+       - source: fabm/*
+         time_method: 2
+       - source: h
+       - source: int_change_in_total_carbon
+       - source: int_change_in_total_nitrogen
+       - source: int_change_in_total_phosphorus
+       - source: int_change_in_total_silicate
+       - source: temp
+       - source: salt
+       - source: rho
+#L4_surface_daily_mean_LENA:
+#   time_unit: day
+#   time_step: 1
+#   k_start: 50
+#   k_stop: 50
+#   k_stride: 1
+#   time_method: 2
+#   variables:
+#       - source: fabm/*
+#         time_method: 2
+#       - source: int_change_in_total_carbon
+#       - source: int_change_in_total_nitrogen
+#       - source: int_change_in_total_phosphorus
+#       - source: int_change_in_total_silicate
+#       - source: temp
+#L4_bottom_daily_mean_V0_Nosm:
+##   time_unit: day
+#   time_step: 1
+#   k_start: 1
+#   k_stop: 1
+#   k_stride: 1
+#   time_method: 2
+#   variables:
+#       - source: fabm/*
+#       - source: int_change_in_total_carbon
+#       - source: int_change_in_total_nitrogen
+#       - source: int_change_in_total_phosphorus
+#       - source: int_change_in_total_silicate
+#L4_time_monthly_mean:
+#   time_unit: month
+#   time_step: 1
+#   variables:
+#      - source: *
+#        time_method: 2

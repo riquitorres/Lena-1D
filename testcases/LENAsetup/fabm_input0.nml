@@ -1,0 +1,31 @@
+&observations
+    variable = 'mole_fraction_of_carbon_dioxide_in_air'
+    constant_value = 385.0
+/
+
+&observations
+    variable = 'T1_c'
+    file = 'T1_0.dat'
+    relax_tau = 864000
+/
+
+&observations
+    variable = 'T2_c'
+    file = 'T2_0.dat'
+    relax_tau = 864000
+/
+
+&observations
+    variable = 'absorption_of_silt'
+    constant_value = 0.1
+/
+
+&observations
+    variable = 'bottom_stress'
+    constant_value = 0.0
+/
+
+&observations
+    variable = 'pressure'
+    constant_value = 0.0
+/
