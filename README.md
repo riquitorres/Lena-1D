@@ -7,8 +7,8 @@ The manuscript uses ERSEM and GOTM as the main biogeochemical and hydrodynamic m
 The ERSEM code specific to this manuscript is provided here, while the code for GOTM and FABM can be access as described below in this README file. 
 The commit versions for each are:
 
-FABM: 903f899737d1138ce0a4c535c4367fae9bb2a6dc
-GOTM: 2655226f5bc5843650c6e9a7989ec4d4001764b4
+* FABM: 903f899737d1138ce0a4c535c4367fae9bb2a6dc
+* GOTM: 2655226f5bc5843650c6e9a7989ec4d4001764b4
 
 
 ERSEM is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation (https://www.gnu.org/licenses/gpl.html), either version 3 of the License, or (at your option) any later version.
