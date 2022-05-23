@@ -1,3 +1,16 @@
+This the Release of the Code and setup associated with the manuscript submitted to Biogeochemical letters as:
+
+Biological lability of terrigenous DOC increases CO2 outgassing across Arctic shelves" by Luca Polimene, Ricardo Torres, Helen R. Powley, Michael Bedington, Bennet Juhls, Juri Palmtag, Jens Strauss and Paul J. Mann. BIOG-D-21-00202
+
+The manuscript uses ERSEM and GOTM as the main biogeochemical and hydrodynamic models, and FABM as the coupling code that enables the communication between the hydrodynamic and biogeochemical model. 
+
+The ERSEM code specific to this manuscript is provided here, while the code for GOTM and FABM can be access as described below in this README file. 
+The commit versions for each are:
+
+FABM: 903f899737d1138ce0a4c535c4367fae9bb2a6dc
+GOTM: 2655226f5bc5843650c6e9a7989ec4d4001764b4
+
+
 ERSEM is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation (https://www.gnu.org/licenses/gpl.html), either version 3 of the License, or (at your option) any later version.
 It is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 A copy of the license is provided in COPYING.
@@ -16,10 +29,9 @@ First obtain the FABM source code:
 
 Obtain the ERSEM code for FABM:
 
-    git clone git@gitlab.ecosystem-modelling.pml.ac.uk:edge/ersem.git <ERSEMDIR>
+    git clone git@github.com:riquitorres/Lena-1D.git <ERSEMDIR>
 
 (Replace `<ERSEMDIR>` with the directory where you want the ERSEM code to go, e.g., ~/ersem-git.)
-Note that for this to work, you have to provide [the PML GitLab server](https://gitlab.ecosystem-modelling.pml.ac.uk/profile/keys) with your public SSH key.
 
 FABM and ERSEM use object-oriented Fortran and therefore require a recent Fortran compiler, such as Intel Fortran 12.1 or higher and gfortran 4.7 or higher. Compilation is regularly tested with Intel Fortran 12.1, 13.0 and 14.0. as well as gfortran 4.7, 4.8 and 4.9.
 
@@ -54,66 +66,6 @@ It is good practice to keep up to date with the latest code from the ERSEM, FABM
 
 If either the ERSEM, FABM or GOTM source codes change (e.g., because changes you made to the code yourself, or after `git pull`), you will need to recompile. This does NOT require rerunning cmake. Instead, you need to return to the build directory and rerun `make install`. For instance `cd ~/build/gotm && make install`.
 
-### FABM-ERSEM 0d ("aquarium")
-
-The 0d driver allows you to run FABM models in a "well-mixed box", under arbitrary (time-varying) environmental forcing.
-
-To build the 0d driver, you need to create a directory to build the code in, call `cmake` to generate makefiles, and call `make` to compile and install the FABM library. Usually, the following suffices for this:
-
-    mkdir -p ~/build/fabm-0d
-    cd ~/build/fabm-0d
-    cmake <FABMDIR>/src/drivers/0d -DGOTM_BASE=<GOTMDIR> -DFABM_ERSEM_BASE=<ERSEMDIR>
-    make install
-
-In the above, replace `<ERSEMDIR>` with the path to directory with the ERSEM source code (e.g., ~/ersem-git), `<FABMDIR>` with the path to directory with the FABM source code (e.g., ~/fabm-git), and `<GOTMDIR>` with the path to directory with the GOTM source code (e.g., ~/gotm-git). The latter is needed because the 0d driver uses GOTM routines for input, output, time integration, etc. If you experience issues related to NetCDF, see [tips and tricks/troubleshooting](#tips-and-tricks-troubleshooting).
-
-This will give you an executable at `~/local/fabm/0d/bin/fabm0d`.
-
-To use the driver, you need a configuration file can run.nml, which you could take from [<FABMDIR>/testcases/0d/run.nml](../blob/master/testcases/0d/run.nml) In addition, you need a file with forcing data for surface shortwave radiation, temperature and salinity, e.g., [<FABMDIR>/testcases/0d/env_nns_annual.dat](../blob/master/testcases/0d/env_nns_annual.dat). The local name of this file is configured in run.nml, variable env_file. Finally, you can provide additional forcing with a `input.yaml` file, which can contain entries such as
-
-    wind_speed:
-      file: wind.dat
-      column: 1
-      scale_factor: 1.0
-    mass_concentration_of_silt:
-      constant_value: 400.
-    mole_fraction_of_carbon_dioxide_in_air:
-      constant_value: 401.0
-    bottom_stress:
-      constant_value: 0.0
-
-This specifies that wind speed must be read from file wind.dat (first column, no scaling), the mass concentration of silt must be set to a constant value of 400 mg/m3, atmospheric pCO2 to 401 ppm, and bottom stress to 0 Pa. The "column" and "scale_factor" attributes in the case of wind_speed are optional. They default to 1 and 1.0, respectively.
-
-### Python front-end
-
-The Python front-end can be used for enumerating model metadata (e.g., variable information), to add documentation to fabm.yaml files, to retrieve sources-sinks and diagnostics while manipulating the environment, and to show a configuration GUI [the last is still under development].
-
-To build the Python driver, you need to create a directory to build the code in, call `cmake` to generate makefiles, and call `make` to compile and install the FABM library. Usually, the following suffices for this:
-
-    mkdir -p ~/build/fabm-python
-    cd ~/build/fabm-python
-    cmake <FABMDIR>/src/drivers/python -DFABM_ERSEM_BASE=<ERSEMDIR>
-    make install
-
-In the above, replace `<FABMDIR>` with the directory with the FABM source code, e.g., ~/fabm-git and `<ERSEMDIR>` with the directory with the ERSEM source code, e.g., ~/ersem-git.
-
-This will install the python-fabm module in a directory that is automatically looked in by Python. Typically, this is ~/.local/lib/python2.X/site-packages (with X being Python's minor version number). This means you can now just open Python and enter `import pyfabm` to load FABM's Python module.
-
-Example scripts that use the Python front-end can be found in `<FABMDIR>/testcases/python`. For instance, use `<FABMDIR>/testcases/python/fabm_complete_yaml.py` to add documentation to a fabm.yaml file.
-
-### NEMO + FABM + ERSEM
-
-FABM needs to be compiled separately before the compilation of NEMO.
-Usually, the following suffices for this:
-
-    mkdir -p ~/build/nemo
-    cd ~/build/nemo
-    cmake <FABMDIR>/src/ -DFABM_HOST=nemo -DFABM_ERSEM_BASE=<ERSEMDIR>
-    make install
-
-In the above, replace `<FABMDIR>` with the directory with the FABM source code, e.g., ~/fabm-git and `<ERSEMDIR>` with the directory with the ERSEM source code, e.g., ~/ersem-git.
-
-This will create the library in the standard folder ~/local/fabm/nemo/lib where NEMO-FABM will look for linking to NEMO.
 
 ### Tips and tricks/troubleshooting
 
@@ -149,11 +101,4 @@ To compile the code, you need [CMake](http://www.cmake.org/). If CMake is instal
 
 Note that it is good practice to keep up to date with the latest code from the GOTM, FABM and ERSEM repositories by regularly right-clicking the repository directory, choosing "Git Sync...", and clicking the "Pull" button in the window that then appears.
 
-# Migrating from an earlier ERSEM version
 
-If you were using an earlier release of ERSEM, you can update your old ERSEM configuration (`fabm.yaml`)
-to the latest by running the Python script `testcases/update.py` with one argument: the path to your old fabm.yaml file.
-
-This script requires a recent version of Python 2.X and the [PyYAML package](http://pyyaml.org/wiki/PyYAML).
-Ideally, you also have the latest version of [the Python front end to FABM-ERSEM](#python-front-end) installed;
-this enables the update script to clean up the yaml file and add documentation to it. 

@@ -2,7 +2,7 @@
     calc_fluxes = .true.
     fluxes_method = 1
     back_radiation_method = 1
-    meteo_file = 'Luca_meteo_2010-2018_1hours.dat'
+    meteo_file = 'meteo_2010-2018_1hours.dat'
     wind_factor = 1.0
     hum_method = 3
     rain_impact = .false.
