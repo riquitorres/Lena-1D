@@ -21,15 +21,17 @@ Copyright 2016 Plymouth Marine Laboratory.
 
 ## Linux
 
-First obtain the FABM source code:
+First obtain the FABM source code and check out the relevant commit version:
 
     git clone https://github.com/fabm-model/fabm.git <FABMDIR>
+    cd <FABMDIR>
+    git checkout 903f899737d1138ce0a4c535c4367fae9bb2a6dc
 
 (Replace `<FABMDIR>` with the directory where you want the FABM code to go, e.g., ~/fabm-git.)
 
 Obtain the ERSEM code for FABM:
 
-    git clone git@github.com:riquitorres/Lena-1D.git <ERSEMDIR>
+    git clone  https://github.com/riquitorres/Lena-1D.git <ERSEMDIR>
 
 (Replace `<ERSEMDIR>` with the directory where you want the ERSEM code to go, e.g., ~/ersem-git.)
 
@@ -39,9 +41,11 @@ FABM and ERSEM use a platform-independent build system based on [cmake](http://w
 
 ### GOTM + FABM + ERSEM
 
-First obtain the latest (developers') version of the GOTM code from its git repository:
+First obtain the GOTM code from its git repository and checkout the relevent commit:
 
     git clone https://github.com/gotm-model/code.git <GOTMDIR>
+    cd <GOTMDIR>
+    git checkout 2655226f5bc5843650c6e9a7989ec4d4001764b4
 
 (Replace `<GOTMDIR>` with the directory where you want the GOTM code to go, e.g., ~/gotm-git.)
 
@@ -62,9 +66,6 @@ If you experience issues related to NetCDF when running `make install`, see [tip
 
 Now you should have a GOTM executable with FABM and ERSEM support at `~/local/gotm/bin/gotm`.
 
-It is good practice to keep up to date with the latest code from the ERSEM, FABM and GOTM repositories by regularly executing `git pull` in a directory of each repository.
-
-If either the ERSEM, FABM or GOTM source codes change (e.g., because changes you made to the code yourself, or after `git pull`), you will need to recompile. This does NOT require rerunning cmake. Instead, you need to return to the build directory and rerun `make install`. For instance `cd ~/build/gotm && make install`.
 
 
 ### Tips and tricks/troubleshooting
@@ -99,6 +100,24 @@ After these two program are installed, you can obtain the code by right-clicking
 
 To compile the code, you need [CMake](http://www.cmake.org/). If CMake is installed, open "CMake (cmake-gui)", specify GOTM's `src` directory for "Where is the source code", choose a directory of your choice (but outside the source directory!) for "Where to build the binaries", and click Configure. Choose the generator that matches your Visual Studio version (avoid the IA64 and Win64 options) and click Finish. Several configuration options will appear, among which `FABM_BASE`. This option must be set to the directory with the FABM source code (the root directory, not the `src` subdirectory). After doing so, click "Configure". Then a new option `FABM_ERSEM_BASE` will appear, which must be set to the path to the directory with ERSEM source code (the root directory, not the `src` subdirectory). Keep clicking "Configure" until there are no red-coloured options left. Then press "Generate". This will create a `gotm.sln` Visual Studio solution in the specified build directory, which you can now open with Visual Studio.
 
-Note that it is good practice to keep up to date with the latest code from the GOTM, FABM and ERSEM repositories by regularly right-clicking the repository directory, choosing "Git Sync...", and clicking the "Pull" button in the window that then appears.
+# Running the code
+To run the model create a new directory for the project and link all the files required to run gotm which can be found in the ERSEM directory you have clone from git, in addition to the gotm executable that you have just created:
 
+    mkdir -p <RUNDIR>
+    cd <RUNDIR>
+    ln -s <ERSEMDIR>/testcases/LENAsetup/* .
+    ln -s ~/build/gotm/gotm .
+    
+ where <RUNDIR> is the directory you want to run the model from and <ERSEMDIR> is the directory with the ERSEM code. 
+    
+This folder now contains all files for the scenarios run in the manuscript.Before running the model airsea.nml, fabm_input.nml and fabm.yaml files need to be defined. These can be linked to the scenario files like the example below:
+   ln -s airsea0.nml airsea.nml
+   ln -s fabm_input0.nml fabm_input.nml
+   ln -s fabm.yaml0.nml fabm.yaml
+   
+Once everything is linked the model can be run by typing the command:
 
+    ./gotm
+    
+    
+ 
