@@ -5,13 +5,13 @@
 
 &observations
     variable = 'T1_c'
-    file = 'T1_2.dat'
+    file = 'T1_25.dat'
     relax_tau = 864000
 /
 
 &observations
     variable = 'T2_c'
-    file = 'T2_2.dat'
+    file = 'T2_25.dat'
     relax_tau = 864000
 /
 
