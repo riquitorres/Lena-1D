@@ -1,0 +1,39 @@
+{
+    "description": "<p>This the Release of the Code and setup associated with the manuscript submitted to Biogeochemical letters as:</p>\n<p>Biological lability of terrigenous DOC increases CO2 outgassing across Arctic shelves\" by Luca Polimene, Ricardo Torres, Helen R. Powley, Michael Bedington, Bennet Juhls, Juri Palmtag, Jens Strauss and Paul J. Mann. BIOG-D-21-00202</p>", 
+    "license": "other-open", 
+    "title": "riquitorres/Lena-1D: ERSEM code for Biogeochemical Letters submission", 
+    "version": "BIOG-D-21-00202", 
+    "upload_type": "software", 
+    "publication_date": "2022-05-27", 
+    "creators": [
+        {
+        	"affiliation": "Plymouth Marine Laboratory", 
+            "name": "Luca Polimene"
+        }, 
+        {
+        	"affiliation": "Plymouth Marine Laboratory", 
+            "name": "Ricardo Torres"
+        }, 
+        {
+            "affiliation": "Plymouth Marine Laboratory", 
+            "name": "Michael Bedington"
+        }, 
+        {
+            "affiliation": "Plymouth Marine Laboratory, Cardiff University", 
+            "name": "Helen R. Powley"
+        }
+    ], 
+    "access_right": "open", 
+    "related_identifiers": [
+        {
+            "scheme": "url", 
+            "identifier": "https://github.com/riquitorres/Lena-1D/tree/BIOG-D-21-00202", 
+            "relation": "isSupplementTo"
+        }, 
+        {
+            "scheme": "doi", 
+            "identifier": "10.5281/zenodo.6587785", 
+            "relation": "isVersionOf"
+        }
+    ]
+}
